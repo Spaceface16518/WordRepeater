@@ -1,7 +1,10 @@
 package com.repeater;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.function.Consumer;
 
 public class Generator {
     private ArrayList<String> words;
@@ -12,33 +15,49 @@ public class Generator {
         words = new ArrayList<>();
     }
 
-    public Generator(String words, char separator) {
-        this.words.addAll(Arrays.asList(words.split(String.valueOf(separator))));
+    public Generator(@NotNull String string, char separator) {
+        words = new ArrayList<>();
+        words.addAll(Arrays.asList(string.split(String.valueOf(separator))));
         this.next = 0;
     }
 
     public String next() {
         incrementIndex();
-        return words.get(next);
+        return words.get(next - 1);
     }
 
-    protected void incrementIndex() {
+    public void incrementIndex() {
         next += 1;
     }
 
-    protected void incrementIndex(int amount) {
+    public void incrementIndex(int amount) {
         next += amount;
     }
 
-    int getIndex() {
+    public int getIndex() {
         return next;
     }
 
-    void setIndex(int value) {
+    protected void setIndex(int value) {
         if (value <= words.size()) {
             this.next = value;
             for (int i = backup.size(); i <= value; i++) words.remove(i);
         }
+    }
 
+    public String getWord(int index) {
+        return words.get(index);
+    }
+
+    public int size() {
+        return words.size();
+    }
+
+    public String getCurrent() {
+        return this.getWord(next);
+    }
+
+    public void forEach(Consumer<? super String> action) {
+        words.forEach(action);
     }
 }

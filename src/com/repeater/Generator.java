@@ -24,7 +24,9 @@ public class Generator {
 
     public String next() {
         incrementIndex();
-        return words.get(next - 1);
+        String var = words.get(next - 1);
+        backup.add(var);
+        return var;
     }
 
     public void incrementIndex() {

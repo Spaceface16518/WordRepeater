@@ -23,6 +23,13 @@ class RepeaterTest {
 
     }
 
+    @Test
+    @Tag("flushStreams")
+    @DisplayName("test flushStreams")
+    void testFlushStreams() {
+
+    }
+
     @AfterEach
     void tearDown() {
         repeater.flushStreams();

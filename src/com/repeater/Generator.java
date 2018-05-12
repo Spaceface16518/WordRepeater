@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.function.Consumer;
 
 public class Generator {
-    // TODO: Implement Streams, Writers and Buffers
     private ArrayList<String> words;
     private int next;
     private ArrayList<String> backup;

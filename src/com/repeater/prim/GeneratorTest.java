@@ -1,4 +1,4 @@
-package com.repeater;
+package com.repeater.prim;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

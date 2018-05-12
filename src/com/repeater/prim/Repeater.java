@@ -1,4 +1,4 @@
-package com.repeater;
+package com.repeater.prim;
 
 import java.util.List;
 import java.util.function.Consumer;

@@ -32,6 +32,7 @@ public class DynamicBuffer<T> implements Flushable, Backupable {
     private static final int maxLimit = 30;
     private static final int limitSpacer = 10;
     private OutputStream outputStream;
+    @Deprecated
     private List<T> buffer;
     // TODO: replace current backup system with separate class
     // Also don't make test for the backup system. Or do? Maybe ask an actual
@@ -91,11 +92,13 @@ public class DynamicBuffer<T> implements Flushable, Backupable {
         // More resets to come.
     }
 
+    @Deprecated
     @Override
     public void cleanBackup() {
         this.backup.clear();
     }
 
+    @Deprecated
     @Override
     public void cleanBackup(int... locations) {
         for (int location : locations) {
@@ -103,6 +106,7 @@ public class DynamicBuffer<T> implements Flushable, Backupable {
         }
     }
 
+    @Deprecated
     @Override
     public void cleanBackup(int lookBack) {
         int last = backup.size() - 1;
@@ -114,12 +118,14 @@ public class DynamicBuffer<T> implements Flushable, Backupable {
     /**
      * Backs up the buffer to the backup array.
      */
+    @Deprecated
     @Override
     public synchronized void backup() {
         ArrayList<T> buf = new ArrayList<>(buffer); // Localize the array for security.
         if (this.backupEnabled) backup.add(buf);
     }
 
+    @Deprecated
     @Override
     public void backup(int numOfBackups) {
 
@@ -144,6 +150,7 @@ public class DynamicBuffer<T> implements Flushable, Backupable {
      * Enables the backup of buffer.
      * Backing up the buffer makes it significatly slower, but enables the buffer to be rewinded.
      */
+    @Deprecated
     public void enableBackup() {
         backup = new ArrayList<>();
         backupEnabled = true;
@@ -153,20 +160,19 @@ public class DynamicBuffer<T> implements Flushable, Backupable {
      * Disables the backup buffer.
      * This also clears the backup.
      */
+    @Deprecated
     public void disableBackup() {
         backup.clear();
         backupEnabled = false;
     }
 
-    public void reset() {
-
-    }
-
+    @Deprecated
     public void rewind() {
         this.buffer.clear();
         this.buffer.addAll(backup.get(backup.size() - 1));
     }
 
+    @Deprecated
     public void rewind(int lookBack) {
         this.buffer.clear();
         this.buffer.addAll(backup.get(lookBack));

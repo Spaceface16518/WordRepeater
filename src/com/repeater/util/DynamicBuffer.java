@@ -32,11 +32,11 @@ public class DynamicBuffer<T> implements Flushable, Backupable {
     private static final int maxLimit = 30;
     private static final int limitSpacer = 10;
     private OutputStream outputStream;
-    @Deprecated
     private List<T> buffer;
     // TODO: replace current backup system with separate class
     // Also don't make test for the backup system. Or do? Maybe ask an actual
     // developer?
+    @Deprecated
     private List<List<T>> backup;
     private boolean backupEnabled = false;
     private int limit;

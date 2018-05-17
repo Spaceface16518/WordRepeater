@@ -1,65 +1,73 @@
+/*
+ * Copyright 2018 Amrit Rathie
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do
+ * so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial
+ * portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+ * PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+ * AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 package com.repeater.prim;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import java.util.function.Consumer;
 
-public class Generator {
-    private ArrayList<String> words;
-    private int next;
-    private ArrayList<String> backup;
+public class Generator<T> implements Iterable<T> {
+    List<T> storageList;
 
-    public Generator() {
-        words = new ArrayList<>();
+    Generator() {
+        storageList = null;
     }
 
-    public Generator(@NotNull String string, char separator) {
-        words = new ArrayList<>();
-        words.addAll(Arrays.asList(string.split(String.valueOf(separator))));
-        this.next = 0;
+    public Generator(@NotNull List<T> list) {
+        storageList = new ArrayList<>(list);
     }
 
-    public String next() {
-        incrementIndex();
-        String var = words.get(next - 1);
-        backup.add(var);
-        return var;
+    /**
+     * Returns an iterator over elements of type {@code T}.
+     *
+     * @return an Iterator.
+     */
+    @NotNull
+    @Override
+    public Iterator<T> iterator() {
+        return storageList.iterator(); // FIXME: may return null if "storageList" is null.
     }
 
-    public void incrementIndex() {
-        next += 1;
-    }
-
-    public void incrementIndex(int amount) {
-        next += amount;
-    }
-
-    public int getIndex() {
-        return next;
-    }
-
-    protected void setIndex(int value) {
-        if (value <= words.size()) {
-            this.next = value;
-            for (int i = backup.size(); i <= value; i++) words.remove(i);
+    /**
+     * Performs the given action for each element of the {@code Iterable}
+     * until all elements have been processed or the action throws an
+     * exception.  Actions are performed in the order of iteration, if that
+     * order is specified.  Exceptions thrown by the action are relayed to the
+     * caller.
+     * <p>
+     * The behavior of this method is unspecified if the action performs
+     * side-effects that modify the underlying source of elements, unless an
+     * overriding class has specified a concurrent modification policy.
+     *
+     * @param action The action to be performed for each element
+     *
+     * @throws NullPointerException if the specified action is null
+     */
+    @Override
+    public void forEach(@NotNull Consumer<? super T> action) throws NullPointerException {
+        for (T element : this.storageList) {
+            action.accept(element);
         }
-    }
-
-    public String getWord(int index) {
-        return words.get(index);
-    }
-
-    public int size() {
-        return words.size();
-    }
-
-    public String getCurrent() {
-        return this.getWord(next);
-    }
-
-    public void forEach(Consumer<? super String> action) {
-        words.forEach(action);
     }
 }

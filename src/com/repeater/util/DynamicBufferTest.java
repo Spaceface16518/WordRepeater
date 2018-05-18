@@ -58,7 +58,7 @@ class DynamicBufferTest {
     @DisplayName("Write method test")
     void writeTest() {
 //        buffer.write(sample);
-// TODO: fix or use th capture part of buffer.write()
+// TODO: fix or use the capture part of buffer.write()
     }
 
     @Test

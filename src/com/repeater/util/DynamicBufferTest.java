@@ -45,7 +45,7 @@ class DynamicBufferTest {
         sample = getRand();
     }
 
-    private synchronized static List<String> getRand() {
+    private static List<String> getRand() {
         ArrayList<String> builder = new ArrayList<>();
         Random rand = new Random();
         for (int i = 0; i < 50; i++)

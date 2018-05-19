@@ -34,16 +34,9 @@ import java.util.Random;
 
 @DisplayName("Dynamic Buffer class tests")
 class DynamicBufferTest {
+    private final List<String> sample = getRand();
     private DynamicBuffer<?> buffer;
     private ByteArrayOutputStream out;
-    private List<String> sample;
-
-    @BeforeEach
-    void setUp() throws IOException {
-        buffer = new DynamicBuffer<String>(new ObjectOutputStream(out = new
-                ByteArrayOutputStream()));
-        sample = getRand();
-    }
 
     private static List<String> getRand() {
         ArrayList<String> builder = new ArrayList<>();
@@ -51,6 +44,12 @@ class DynamicBufferTest {
         for (int i = 0; i < 50; i++)
             builder.add(String.valueOf(rand.nextDouble() * 15));
         return builder;
+    }
+
+    @BeforeEach
+    void setUp() throws IOException {
+        buffer = new DynamicBuffer<String>(new ObjectOutputStream(out = new
+                ByteArrayOutputStream()));
     }
 
     @Test
